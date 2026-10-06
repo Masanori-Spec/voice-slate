@@ -1,6 +1,8 @@
 # VoiceSlate: selective USTX sharing preparation
 
-**Native-first feasibility candidate. No browser UI or native success is claimed yet.** Targets official OpenUtau `0.1.572.3-alpha`, USTX `0.10`, voice parts only.
+**Native/API feasibility passed for official OpenUtau `0.1.572.3-alpha`, USTX `0.10`, voice parts only.** This source prototype has no browser UI, GUI or audio verification claim.
+
+[Successful native run](https://github.com/Masanori-Spec/voice-slate/actions/runs/37546077577) · [Exact evidence and limits](docs/VERIFICATION.md)
 
 VoiceSlate prepares a separate USTX copy by clearing explicitly selected project-wide settings: singer IDs, renderer/resampler/wavtool bindings, track colors, chosen phoneme-override fields, chosen per-note expression values and chosen curves. It keeps original part boundaries, note positions/durations, lyrics, pitch points, vibrato, expression definitions and every unselected data value. YAML formatting/comments are not preserved when changes are made.
 
@@ -28,7 +30,7 @@ Hosted CI downloads the exact official Linux release and verifies its size/SHA-2
 
 The independent prototype processes that actual native file. The gate checks **raw output and the production YAML deserializer before any native validation**, then separately runs normal `Ustx.Load`, `Ustx.Save`, and fresh reopen. This ordering matters: OpenUtau clears renderer bindings for missing singers during validation, which could otherwise hide a cleaner bug. A literal oracle checks all retained musical data, complete raw-document equality outside the 37 selected fixture changes, definition preservation, unchanged original bytes and actual corrupted-file controls. [Full contract](docs/TEST-DESIGN.md)
 
-Native compilation/runtime and evidence inspection are pending. A UI may start only after this exact consumer gate passes and its actual artifacts are independently reviewed.
+The native gate passed at `d3f8d4f39aeac95c4a1ccf860bbf10bfb84699cd`. Its actual cleaned file, prevalidation snapshots, byte-identical native saves and corruption controls are recorded in [VERIFICATION.md](docs/VERIFICATION.md). A future browser producer must pass again using its own real downloaded USTX; this prototype result does not pre-approve a different implementation.
 
 ## Input scope and distribution
 

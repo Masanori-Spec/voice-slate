@@ -20,10 +20,14 @@ The explicit fixture policy produces 37 changes: two singer IDs, six renderer bi
 4. Normal official `Ustx.Load` then `Ustx.Save` and a fresh Load consume the same actual output. A second native save must be byte-identical. Expected normalization is limited to consuming the serialized track phonemizer field into its runtime object on Load; Save restores that unchanged default type. No retained pitch, vibrato, duration, curve, definition or layout difference is silently ignored.
 5. Actual corrupted USTX files alter one retained pitch Y or remove an unselected breath curve. Both are read through the identical production deserializer/snapshot path. They must fail the same whole-output/native-state oracle that accepts the real copy, even though the corruptions remain syntactically valid.
 
-The released core and YAML DLL hashes are recorded and checked unchanged after execution. The source release archive is verified against the official API size/digest before extraction. No vendor parser patch, test subclass, monkeypatch, private state setter, GUI simulation or fake native-success flag is used.
+The released core and YAML DLL hashes are recorded and checked unchanged after execution. The official release archive is verified against the official API size/digest before extraction. No vendor parser patch, test subclass, monkeypatch, private state setter, GUI simulation or fake native-success flag is used.
 
 ## Scope and stopping point
 
 This first gate establishes a bounded native/API feasibility result only. It makes no GUI, browser, voicebank compatibility, audio rendering/equivalence, anonymity or privacy guarantee. All content is synthetic. A browser UI may begin only after actual hosted evidence passes independent inspection. Any future browser producer must pass the same gate using its real downloaded USTX rather than a substituted prototype output.
 
 Local tests cover explicit acknowledgment, category independence, no-op/idempotent copies, complete unselected-value retention, YAML scalar ambiguities/aliases/duplicates/tags, bounds, malformed timing/expressions, CLI exclusivity, source immutability and nonblocking FIFO/symlink rejection. Local prototype tests are not evidence that the native consumer ran.
+
+## Verified native/API outcome
+
+The complete contract passed in [run 37546077577](https://github.com/Masanori-Spec/voice-slate/actions/runs/37546077577) at commit `d3f8d4f39aeac95c4a1ccf860bbf10bfb84699cd`. The downloaded actual evidence, release/DLL pins, source/output hashes, prevalidation state, save/reopen identity and negative files are recorded in [VERIFICATION.md](VERIFICATION.md). This remains an API/serializer feasibility proof, not GUI or browser acceptance.
