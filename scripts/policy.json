@@ -1,0 +1,8 @@
+{
+  "singer": true,
+  "render": true,
+  "trackColor": true,
+  "phonemeOverrideFields": ["phoneme", "preutter_delta"],
+  "phonemeExpressions": ["clr", "gen"],
+  "curves": ["dyn"]
+}

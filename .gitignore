@@ -1,0 +1,6 @@
+.native/
+evidence/
+__pycache__/
+*.pyc
+native/bin/
+native/obj/
