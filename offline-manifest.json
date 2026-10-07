@@ -1,13 +1,13 @@
 {
   "files": {
-    "index.html": "f9368b232aa55de1371b4aab23c8cf8376ba7a0ab52fbf018308e82cd6bf60a1",
+    "index.html": "07e4cae91d8e73b5556036ca08dad6260a8d37539d5255f6503415262bb6d15b",
     "web/core.js": "034d431655ec8b7035beedd3ccdde3e1176ac738a23386e131572a8b2f377caf",
-    "web/app.js": "bd83f16f7efdc3c93e52d65051297217cec87f5ac1dd7a15992c25ada0ac55ac",
+    "web/app.js": "a7f69357c436d89edbb3043e0832f0f9f4b5fc6ef363d30851dda331aa3848d5",
     "web/sample.js": "e1767ec2138e76f633e5fe1f14b6504db1b7f3ce0cb99f0dfffaa997165b5a0c",
-    "web/style.css": "ce8b85cd763dab6f73be979564b0d8717fa702f73fc1724a9424b27cc7cdaf37",
+    "web/style.css": "c26d336b1a47509d525df5f0f0f9d1da77ad48ac4c714af2dfac138a0a942347",
     "web/vendor/js-yaml.umd.min.js": "774fe802006763599e1faadd17d562ff781bb7849b66a42ac745f227d4833f02",
     "web/vendor/LICENSE-js-yaml.txt": "a07bc24468b9654ce76a547d47a2db282d07733b715db4c73a98bd63961f9550",
-    "README-OFFLINE.txt": "593ddeb34fc4faf943c3db424995c63b3d9a9dd2fb35b283955e6e56a58001b2"
+    "README-OFFLINE.txt": "86f2f0404aa85da3aa11af910b463cda2bc491f2affca0df38d4b5f49d8b4004"
   },
-  "zip_sha256": "cd4d917df8d00d445f604afe9017655d2c34809cc85c693dda817fce70466250"
+  "zip_sha256": "2993e7355a6d5802aeadea32fe34b02616a4c155fc1900c42d2d575c2c986317"
 }

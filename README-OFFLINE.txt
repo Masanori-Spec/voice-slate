@@ -12,8 +12,8 @@ Changing selection or input clears acknowledgment. The original file is not modi
 
 対象：OpenUtau 0.1.572.3-alpha / USTX 0.10 の音声パートのみ。
 Scope: OpenUtau 0.1.572.3-alpha / USTX 0.10 voice parts only.
-選択外のデータ、パート・音符・タイミング・歌詞・ピッチ・ビブラート・定義を保持します。
-Unselected data, original parts, notes, timing, lyrics, pitch, vibrato and expression definitions remain.
+選択外のデータ、パート・音符・タイミング・歌詞・音符のピッチ点・ビブラート・定義を保持します。
+Unselected data, original parts, notes, timing, lyrics, note pitch points, vibrato and expression definitions remain.
 設定を変更した場合、YAML の書式・コメントは保持しません。選択なしでは元のバイト列をコピーします。
 Changed output does not preserve YAML formatting/comments. With nothing selected, output is byte-identical.
 

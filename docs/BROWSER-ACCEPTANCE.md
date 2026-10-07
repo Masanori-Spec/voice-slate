@@ -4,7 +4,7 @@ The historical Python/native result in [VERIFICATION.md](VERIFICATION.md) remain
 
 ## Explicit choices and retained state
 
-The supplied-file reader starts with every cleanup option off. Independent choices cover singer IDs, renderer/resampler/wavtool bindings, track colors, six supported phoneme override fields, existing per-note expression abbreviations and existing part-curve abbreviations. Selected changes apply across all original tracks and voice parts. Definitions and every unselected value remain; original parts, notes, timing, lyrics, pitch/vibrato and tuning are never rebuilt. YAML formatting/comments may change.
+The supplied-file reader starts with every cleanup option off. Independent choices cover singer IDs, renderer/resampler/wavtool bindings, track colors, six supported phoneme override fields, existing per-note expression abbreviations and existing part-curve abbreviations. Selected changes apply across all original tracks and voice parts. Definitions and every unselected value remain; original parts, notes, timing, lyrics, note pitch points, vibrato and tuning are never rebuilt. YAML formatting/comments may change.
 
 The app shows project totals, distinct affected track/part/note counts, every affected original value and the proposed removal/default value. A 50-row pager limits screen DOM size; all rows remain in the JSON review and print. A 2,000-change UI cap blocks USTX export until the selection is reduced. No selected changes gives a byte-identical copy. New input or policy changes clear acknowledgment and the cached output. Late reads and late exports cannot revive prior state or download an outdated policy result.
 
