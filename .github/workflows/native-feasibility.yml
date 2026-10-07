@@ -1,4 +1,4 @@
-name: Official USTX selective-cleanup feasibility
+name: Offline browser and official USTX preservation gate
 on:
   push:
   workflow_dispatch:
@@ -6,8 +6,10 @@ permissions:
   contents: read
 jobs:
   official-native-consumer:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     timeout-minutes: 12
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.playwright-browsers
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
@@ -16,17 +18,27 @@ jobs:
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
         with:
           dotnet-version: '10.0.x'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
       - name: Bounded independent prototype tests
         run: |
           python3 -m pip install --index-url https://pypi.org/simple --only-binary=:all: -r requirements.txt
           python3 -m unittest discover -s tests -v
           bash -n scripts/hosted_native_gate.sh
-      - name: Official release writer, prevalidation deserializer and native reopen
+          python3 scripts/verify_offline.py
+      - name: Standard sandboxed browser tools
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+      - name: Actual offline browser downloads and official native consumer
         run: |
           set -euo pipefail
           mkdir -p evidence
           bash scripts/hosted_native_gate.sh 2>&1 | tee evidence/native.log
-      - name: Retain source-only native evidence
+      - name: Retain actual browser and native evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
