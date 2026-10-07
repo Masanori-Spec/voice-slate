@@ -1,0 +1,11 @@
+{
+  "name": "js-yaml",
+  "version": "5.4.2",
+  "sourceCommit": "494400bd45cad078123cfc057e674a9a0a8d9983",
+  "registryTarball": "https://registry.npmjs.org/js-yaml/-/js-yaml-5.4.2.tgz",
+  "integrity": "sha512-m+aqu+LwO1O6sIopafj8HUVl5aawITwZQe/yHpMCKjaWBaA/d07B/QdMb3529REftiU+RMMHL3Vlsw3hON7vWg==",
+  "files": {
+    "LICENSE-js-yaml.txt": "a07bc24468b9654ce76a547d47a2db282d07733b715db4c73a98bd63961f9550",
+    "js-yaml.umd.min.js": "774fe802006763599e1faadd17d562ff781bb7849b66a42ac745f227d4833f02"
+  }
+}

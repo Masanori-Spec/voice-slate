@@ -4,3 +4,5 @@ __pycache__/
 *.pyc
 native/bin/
 native/obj/
+node_modules/
+.playwright-browsers/

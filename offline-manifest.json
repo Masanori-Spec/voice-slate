@@ -1,0 +1,13 @@
+{
+  "files": {
+    "index.html": "f9368b232aa55de1371b4aab23c8cf8376ba7a0ab52fbf018308e82cd6bf60a1",
+    "web/core.js": "034d431655ec8b7035beedd3ccdde3e1176ac738a23386e131572a8b2f377caf",
+    "web/app.js": "6fdeeb9643d359aff9e173efd1d0b93a12e3e517a0e3225b8b1bd15b69f29f1d",
+    "web/sample.js": "e1767ec2138e76f633e5fe1f14b6504db1b7f3ce0cb99f0dfffaa997165b5a0c",
+    "web/style.css": "ce8b85cd763dab6f73be979564b0d8717fa702f73fc1724a9424b27cc7cdaf37",
+    "web/vendor/js-yaml.umd.min.js": "774fe802006763599e1faadd17d562ff781bb7849b66a42ac745f227d4833f02",
+    "web/vendor/LICENSE-js-yaml.txt": "a07bc24468b9654ce76a547d47a2db282d07733b715db4c73a98bd63961f9550",
+    "README-OFFLINE.txt": "593ddeb34fc4faf943c3db424995c63b3d9a9dd2fb35b283955e6e56a58001b2"
+  },
+  "zip_sha256": "2a68da538343f4243c5a1e14083cfea887cecee78edf44c25ab699b8c17d38b1"
+}

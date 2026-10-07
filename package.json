@@ -1,0 +1,13 @@
+{
+  "name": "voice-slate",
+  "version": "0.1.0-experimental",
+  "private": true,
+  "description": "Offline selective USTX sharing preparation",
+  "scripts": {
+    "test": "node --test tests/test_browser_core.cjs",
+    "test:browser": "node scripts/browser_test.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

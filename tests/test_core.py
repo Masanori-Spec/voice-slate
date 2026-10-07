@@ -88,6 +88,18 @@ class CoreTests(unittest.TestCase):
         obj=parse(raw);self.assertEqual([obj[k]for k in ['plain_on','plain_off','plain_yes','plain_date']],['on','off','yes','2020-01-01'])
         self.assertEqual(parse(clean(raw,POLICY,acknowledged=True).output)['plain_on'],'on')
 
+    def test_decimal_precision_must_roundtrip_exactly(self):
+        raw=encode(fixture())
+        sentinel=b'1.000000059604644775390625'
+        damaged=raw.replace(b'y: 3\n',b'y: '+sentinel+b'\n',1)
+        self.assertNotEqual(damaged,raw)
+        with self.assertRaises(InvalidProject):clean(damaged,{'singer':True},acknowledged=True)
+        with self.assertRaises(InvalidProject):parse(raw+b'unknown_precision: '+sentinel+b'\n')
+        with self.assertRaises(InvalidProject):parse(raw+b'signed_integer_zero: -0\n')
+        for literal in [b'1.2000',b'1.20e+2',b'0.000001',b'-0.0']:
+            value=parse(raw+b'ordinary_decimal: '+literal+b'\n')['ordinary_decimal']
+            self.assertEqual(parse(clean(raw+b'ordinary_decimal: '+literal+b'\n',POLICY,acknowledged=True).output)['ordinary_decimal'],value)
+
     def test_unused_track_descriptors_and_absolute_end(self):
         for desc in [[{}],[{'abbr':'x'},{'abbr':'x'}]]:
             p=fixture();p['tracks'].append({'track_expressions':desc})

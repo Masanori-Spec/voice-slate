@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'">
+  <title>VoiceSlate · Selective USTX sharing preparation</title>
+  <link rel="stylesheet" href="web/style.css">
+  <script defer src="web/vendor/js-yaml.umd.min.js"></script>
+  <script defer src="web/core.js"></script>
+  <script defer src="web/sample.js"></script>
+  <script defer src="web/app.js"></script>
+</head>
+<body data-state="empty">
+  <a class="skip" href="#main" data-i18n="skip">本文へ移動</a>
+  <header class="topbar"><div class="brand"><svg aria-hidden="true" viewBox="0 0 40 40"><path d="M5 17v6m7-13v20m8-25v30m8-22v14m7-10v6"/></svg><span>VoiceSlate</span><small>USTX WORKBENCH</small></div><div class="header-tools"><span class="local" data-i18n="local">ファイルはこのブラウザ内だけ</span><div class="language" aria-label="Language"><button id="lang-ja" type="button" lang="ja" aria-pressed="true">日本語</button><button id="lang-en" type="button" lang="en" aria-pressed="false">EN</button></div></div></header>
+  <main id="main" tabindex="-1">
+    <section class="hero"><div><p class="eyebrow">SELECTIVE SHARING PREPARATION</p><h1 data-i18n="title">渡す前に、<br>選んだ設定だけ。</h1><p class="lead" data-i18n="lead">歌詞や音符、パートの構成を保ちながら、共有用の USTX コピーを整えます。</p></div><aside class="scope-note"><span class="scope-tag">PINNED / EXPERIMENTAL</span><strong>OpenUtau 0.1.572.3-alpha</strong><span>USTX 0.10 · voice parts</span><p data-i18n="scope">音源・レンダー・選んだ表情設定を確認してクリア。互換性や匿名化を保証するツールではありません。</p></aside></section>
+    <section class="source-card" id="drop-zone"><div><p class="eyebrow" data-i18n="sourceStep">01 / SOURCE</p><h2 data-i18n="sourceTitle">保存した USTX を選ぶ</h2><p data-i18n="sourceHelp">元ファイルは変更しません。ファイルをひとつ選ぶか、ここにドロップしてください。</p></div><div class="source-actions"><label class="primary file-label" for="file-input" data-i18n="choose">USTX を選ぶ</label><input id="file-input" class="file-input" type="file" accept=".ustx"><div class="text-actions"><button type="button" id="sample" data-i18n="sample">サンプルで試す</button><button type="button" id="clear" data-i18n="clear">クリア</button></div></div></section>
+    <p id="status" class="status" role="status" aria-live="polite"></p><p id="error" class="error" role="alert" hidden></p>
+    <section id="workbench" hidden>
+      <div class="project-bar"><div><p class="eyebrow" data-i18n="projectLabel">CURRENT PROJECT</p><h2 id="project-name"></h2><p id="source-name"></p></div><div class="stats"><div><strong id="track-count">0</strong><span data-i18n="tracks">トラック</span></div><div><strong id="part-count">0</strong><span data-i18n="parts">パート</span></div><div><strong id="note-count">0</strong><span data-i18n="notes">音符</span></div></div></div>
+      <div class="work-grid">
+        <section class="policy-panel"><div class="panel-heading"><p class="eyebrow" data-i18n="chooseStep">02 / CHOOSE</p><h2 data-i18n="policyTitle">クリアする項目を選ぶ</h2><p data-i18n="policyHelp">最初は何も選択されません。選んだ設定だけ、プロジェクト全体に適用します。</p></div>
+          <fieldset><legend data-i18n="bindings">トラック設定</legend><label class="choice"><input type="checkbox" id="policy-singer"><span><strong data-i18n="singer">音源 ID</strong><small data-i18n="singerHelp">各トラックの音源への参照</small></span><b id="singer-count"></b></label><label class="choice"><input type="checkbox" id="policy-render"><span><strong data-i18n="render">レンダーの割り当て</strong><small data-i18n="renderHelp">renderer / resampler / wavtool</small></span><b id="render-count"></b></label><label class="choice"><input type="checkbox" id="policy-trackColor"><span><strong data-i18n="color">トラックの色</strong><small data-i18n="colorHelp">標準色 Blue に戻す</small></span><b id="color-count"></b></label></fieldset>
+          <fieldset><legend data-i18n="overrides">音素の個別指定</legend><div id="override-options"></div></fieldset>
+          <fieldset><legend data-i18n="expressions">音符ごとの表情値</legend><p class="field-help" data-i18n="expressionsHelp">選んだ略号の値を削除。定義は保持します。</p><div id="expression-options"></div></fieldset>
+          <fieldset><legend data-i18n="curves">パートのカーブ</legend><p class="field-help" data-i18n="curvesHelp">選んだカーブだけを削除。音符のピッチ点とビブラートは保持します。</p><div id="curve-options"></div></fieldset>
+          <button type="button" id="reset-policy" class="secondary full" data-i18n="resetPolicy">選択をすべて解除</button>
+        </section>
+        <section class="review-panel"><div class="panel-heading review-heading"><div><p class="eyebrow" data-i18n="reviewStep">03 / REVIEW</p><h2 data-i18n="reviewTitle">変更前と変更後を確認</h2></div><div class="change-total"><strong id="change-count">0</strong><span data-i18n="changes">変更</span></div></div><p class="retained" data-i18n="retained">パート・音符・タイミング・歌詞・ピッチ・ビブラート・定義と、選ばなかった値は保持します。</p><p id="affected-counts" class="affected"></p><p id="no-changes" class="no-changes" data-i18n="noChanges">設定を選ぶと、変更される値がここに表示されます。選択がない場合は元のバイト列をそのままコピーします。</p><div id="diff-container" class="table-scroll" tabindex="0"><table><thead><tr><th data-i18n="where">場所</th><th data-i18n="before">変更前</th><th data-i18n="after">変更後</th></tr></thead><tbody id="diff-rows"></tbody></table></div><div id="pagination" class="pagination"><button type="button" id="previous" data-i18n="previous">前へ</button><span id="page-range"></span><button type="button" id="next" data-i18n="next">次へ</button></div><p class="report-note" data-i18n="reportNote">JSON レポートには、すべての変更箇所と元の値を含みます。レポートにも共有したくない情報が含まれる場合があります。</p></section>
+      </div>
+      <section class="export-card"><div><p class="eyebrow" data-i18n="copyStep">04 / COPY</p><h2 data-i18n="exportTitle">確認した設定でコピーを作る</h2><p class="privacy" data-i18n="privacy">匿名化ではありません。名前・歌詞・コメントや選択外の設定は残ります。音源の互換性や音声の再現も保証しません。</p></div><div class="export-actions"><label class="ack"><input type="checkbox" id="ack"><span data-i18n="ack">変更する設定と元の値を確認し、選択外の情報が残ることを理解しました。</span></label><div class="buttons"><button type="button" class="primary" id="download" disabled data-i18n="download">USTX コピーを書き出す</button><button type="button" class="secondary" id="report" data-i18n="report">JSON レポート</button><button type="button" class="text-button" id="print" data-i18n="print">確認表を印刷</button></div></div></section>
+      <section class="structure-card"><h2 data-i18n="structureTitle">保持するパート構成</h2><p data-i18n="structureHelp">パートの位置・長さと音符数を確認できます。</p><div class="table-scroll" tabindex="0"><table><thead><tr><th data-i18n="track">トラック</th><th data-i18n="part">パート</th><th data-i18n="position">位置 (tick)</th><th data-i18n="duration">長さ (tick)</th><th data-i18n="notes">音符</th></tr></thead><tbody id="structure-rows"></tbody></table></div></section>
+    </section>
+    <footer><p data-i18n="limits">UTF-8 · 最大 8 MiB · USTX 0.10 の音声パートのみ。YAML の未対応構文や不正なデータは拒否します。</p><p><span data-i18n="footerScope">ローカル処理・アカウント不要・ネットワーク通信なし</span><a href="https://github.com/Masanori-Spec/voice-slate" target="_blank" rel="noopener noreferrer" data-i18n="sourceLink">ソースと検証</a></p></footer>
+  </main>
+</body>
+</html>

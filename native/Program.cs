@@ -110,7 +110,7 @@ static class Gate {
     }
 
     public static void Main(string[] args) {
-        Require(args.Length == 2, "Usage: NativeGate author|verify EVIDENCE_DIR");
+        Require(args.Length == 2, "Usage: NativeGate author|verify|precision EVIDENCE_DIR");
         var dir = Path.GetFullPath(args[1]); Directory.CreateDirectory(dir);
         var assembly = typeof(UProject).Assembly;
         Require(Ustx.kUstxVersion.ToString() == "0.10", "Wrong official USTX version");
@@ -147,6 +147,18 @@ static class Gate {
             var reopened = Ustx.Load(saved); AssertClean(reopened); Capture(dir, "native-reopened", reopened);
             var fresh = Path.Combine(dir, "native-reopened-saved.ustx"); Save(fresh, reopened);
             Write(Path.Combine(dir, "native-result.json"), JsonSerializer.Serialize(new { status = "pass", consumer = "Unmodified official release UProject/UNote, production YAML deserializer before validation, Ustx.Load/Save/fresh Load", guiTest = false, audioTest = false, identity }, Json));
+        } else if (args[0] == "precision") {
+            var exact = Yaml.DefaultDeserializer.Deserialize<UProject>(File.ReadAllText(Path.Combine(dir, "precision-exact.ustx")));
+            var rounded = Yaml.DefaultDeserializer.Deserialize<UProject>(File.ReadAllText(Path.Combine(dir, "precision-rounded.ustx")));
+            float a = Parts(exact)[0].notes.First().pitch.data[0].Y;
+            float b = Parts(rounded)[0].notes.First().pitch.data[0].Y;
+            Require(a == 1f && b == MathF.BitIncrement(1f), "Official float32 boundary regression did not distinguish exact and rounded decimals");
+            Write(Path.Combine(dir, "native-precision-result.json"), JsonSerializer.Serialize(new {
+                status = "pass", consumer = "Unchanged production YAML deserializer before validation",
+                exactDecimal = "1.000000059604644775390625", roundedDecimal = "1.0000000596046448",
+                exactFloat32 = a, roundedFloat32 = b,
+                exactBits = BitConverter.SingleToInt32Bits(a).ToString("x8"), roundedBits = BitConverter.SingleToInt32Bits(b).ToString("x8"),
+            }, Json));
         } else throw new Exception("Unknown native gate mode");
     }
 }

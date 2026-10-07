@@ -1,6 +1,6 @@
 # VoiceSlate: selective USTX sharing preparation
 
-**Native/API feasibility passed for official OpenUtau `0.1.572.3-alpha`, USTX `0.10`, voice parts only.** This source prototype has no browser UI, GUI or audio verification claim.
+**Offline Japanese/English browser candidate for official OpenUtau `0.1.572.3-alpha`, USTX `0.10`, voice parts only.** The separate Python native/API proof passed. Actual packaged-browser/native and visual acceptance is still pending. No native GUI or audio verification is claimed.
 
 [Successful native run](https://github.com/Masanori-Spec/voice-slate/actions/runs/37546077577) · [Exact evidence and limits](docs/VERIFICATION.md)
 
@@ -9,6 +9,14 @@ VoiceSlate prepares a separate USTX copy by clearing explicitly selected project
 This is a modest sharing-preparation utility. OpenUtau already has **Reset All**, which can reset a part's pitch, vibrato, phoneme timings/aliases, expressions and curves. Format converters also support USTX. This candidate focuses on reviewing selected settings across the existing project while keeping its other musical data, rather than rebuilding tracks/parts. See [demand and existing tools](docs/SOURCES.md).
 
 It is **not an anonymizer, privacy guarantee or voicebank-compatibility fixer**. Names, lyrics, comments and unselected settings remain in the copy. The review contains affected original values and may itself include information the user does not want to share. No singing synthesis or audio-equivalence claim is made.
+
+## Offline browser candidate
+
+Extract [voice-slate-offline.zip](voice-slate-offline.zip) and open `index.html` in desktop Chrome/Chromium. Choose one saved `.ustx` file. Nothing is selected automatically. Choose settings, inspect affected original values and counts, then acknowledge the review before exporting a separate USTX copy. Input and policy changes invalidate acknowledgment; Clear and newer input cancel late reads, and policy changes cancel pending exports.
+
+The review is paged in groups of 50 rows; JSON and print include every affected row. Track/part/note totals are separate from affected counts. The original part structure remains visible. The screen supports up to 2,000 selected changes per review; larger selections block the USTX copy until reduced. A JSON preview can still be downloaded without acknowledgment. No selection produces an exact byte copy.
+
+The app reads only the supplied file and uses no account, storage, credentials or background network requests. Source text and affected values are inserted as literal text. A restrictive local-file CSP limits execution to the packaged scripts. The offline package includes js-yaml 5.4.2 JavaScript source and its upstream MIT notice; no original VoiceSlate license grant is added. See [browser acceptance](docs/BROWSER-ACCEPTANCE.md).
 
 ## Prototype
 
@@ -34,6 +42,8 @@ The native gate passed at `d3f8d4f39aeac95c4a1ccf860bbf10bfb84699cd`. Its actual
 
 ## Input scope and distribution
 
-The prototype accepts UTF-8, single-document USTX 0.10 with voice parts. Limits: 8 MiB input/output, 250,000 YAML events, depth 32, 65,536 characters per scalar, 64 tracks, 256 parts and 10,000 notes. Absolute part ends must fit native signed 32-bit integers. Aliases, anchors, directives, duplicate/nonstring keys, nonfinite numbers, unresolved expressions, malformed timing/note data and wave parts are rejected. Supported scalar interpretation follows YAML 1.2 for on/off/yes/no and date-looking strings; nondecimal, sexagesimal and leading-zero integer spellings are rejected to avoid YAML 1.1 ambiguity.
+The readers accept a bounded UTF-8, single-document USTX 0.10 voice-part subset. Limits: 8 MiB input/output, 250,000 YAML events, depth 32, 65,536 characters per scalar, 64 tracks, 256 parts and 10,000 notes. Absolute part ends must fit native signed 32-bit integers. Aliases, anchors, directives, duplicate/nonstring keys, nonfinite numbers, unresolved expressions, malformed timing/note data and wave parts are rejected. Supported scalar interpretation follows YAML 1.2 for on/off/yes/no and date-looking strings; nondecimal, sexagesimal and leading-zero integer spellings are rejected to avoid YAML 1.1 ambiguity. Numbers whose exact decimal value cannot survive the producer’s serialization are rejected before any output. This prevents a rounded decimal spelling from changing the native consumer’s float32 pitch value.
 
-Only source and synthetic test code are distributed. No OpenUtau/.NET binaries, voicebanks, real projects, original-code license grant, hosting setup or paid service is included. Official binaries are downloaded only into ignored hosted-CI scratch space; the retained evidence excludes them.
+Only source, the pinned js-yaml source/notice and synthetic test code are distributed. No OpenUtau/.NET binaries, voicebanks, real projects, original-code license grant, hosting setup or paid service is included. Official binaries are downloaded only into ignored hosted-CI scratch space; the retained evidence excludes them.
+
+The browser implementation is independent of the Python cleaner. Twenty local JavaScript tests include exact semantic equality to the accepted native fixture and all 37 Python review records; 18 Python tests still pass. The browser producer must pass the fresh hosted gate using its actual download, production deserialization before validation, native save/reopen and both real corrupted-file controls. Runtime, screenshots and print evidence for this browser candidate remain pending.

@@ -6,6 +6,7 @@ import hashlib
 import math
 import re
 from dataclasses import dataclass
+from decimal import Decimal, InvalidOperation
 
 import yaml
 from yaml.events import AliasEvent, CollectionStartEvent, CollectionEndEvent, ScalarEvent
@@ -34,7 +35,17 @@ class UniqueLoader(yaml.SafeLoader):
                 return node.value  # YAML 1.2: on/off/yes/no are strings.
             if tag=='timestamp':return node.value  # No implicit date type in YAML 1.2.
             if tag not in {'str','int','float','bool','null'}:raise InvalidProject('Unsupported scalar type')
-        return super().construct_object(node,deep=deep)
+        value=super().construct_object(node,deep=deep)
+        if isinstance(node,yaml.ScalarNode)and node.tag=='tag:yaml.org,2002:int'and value==0 and node.value.startswith('-'):
+            raise InvalidProject('Signed integer zero cannot be preserved')
+        if isinstance(node,yaml.ScalarNode)and node.tag=='tag:yaml.org,2002:float':
+            try:
+                original=Decimal(node.value);serialized=Decimal(str(value))
+                if original!=serialized or (original.is_zero()and original.is_signed()!=serialized.is_signed()):
+                    raise InvalidProject('Numeric precision cannot be preserved; no output was produced')
+            except (InvalidOperation,OverflowError)as error:
+                raise InvalidProject('Unsupported numeric precision')from error
+        return value
 
     def construct_mapping(self, node, deep=False):
         result = {}

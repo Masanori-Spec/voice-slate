@@ -15,7 +15,13 @@ dotnet build native/NativeGate.csproj --configuration Release --output .native/g
 cp .native/gate/NativeGate.dll .native/app/VoiceSlate.NativeGate.dll
 dotnet --info > evidence/dotnet-info.txt
 dotnet exec --depsfile .native/app/OpenUtau.deps.json --runtimeconfig .native/app/OpenUtau.runtimeconfig.json .native/app/VoiceSlate.NativeGate.dll author evidence
-python3 scripts/run_transform.py
+python3 scripts/precision_probe.py
+dotnet exec --depsfile .native/app/OpenUtau.deps.json --runtimeconfig .native/app/OpenUtau.runtimeconfig.json .native/app/VoiceSlate.NativeGate.dll precision evidence
+python3 scripts/run_transform.py prototype-
+VOICESLATE_EVIDENCE_DIR="$PWD/evidence" VOICESLATE_REFERENCE_PREFIX=prototype- VOICESLATE_REQUIRE_NATIVE=1 node --test tests/test_browser_core.cjs
+node scripts/browser_test.mjs
+node scripts/browser_convert.mjs
 dotnet exec --depsfile .native/app/OpenUtau.deps.json --runtimeconfig .native/app/OpenUtau.runtimeconfig.json .native/app/VoiceSlate.NativeGate.dll verify evidence
 sha256sum --check evidence/official-dll-before.sha256 | tee evidence/official-dll-unchanged.txt
 python3 scripts/oracle.py
+python3 scripts/browser_oracle.py
