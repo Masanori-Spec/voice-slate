@@ -1,6 +1,6 @@
 # Actual offline-browser acceptance contract
 
-The historical Python/native result in [VERIFICATION.md](VERIFICATION.md) remains unchanged. It does not establish correctness of this new browser producer. Browser runtime and visual acceptance are pending a fresh exact-commit run and independent artifact inspection.
+The browser/native contract below passed in [run 37552523731](https://github.com/Masanori-Spec/voice-slate/actions/runs/37552523731) at `3fef55877b3c506f85b9915072257ffb2dcd5c80`, using actual packaged-browser downloads and independent artifact inspection. [UI-VERIFICATION.md](UI-VERIFICATION.md) records the identities and observed results. The historical Python/native result in [VERIFICATION.md](VERIFICATION.md) is retained separately.
 
 ## Explicit choices and retained state
 

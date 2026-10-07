@@ -31,3 +31,9 @@ Local tests cover explicit acknowledgment, category independence, no-op/idempote
 ## Verified native/API outcome
 
 The complete contract passed in [run 37546077577](https://github.com/Masanori-Spec/voice-slate/actions/runs/37546077577) at commit `d3f8d4f39aeac95c4a1ccf860bbf10bfb84699cd`. The downloaded actual evidence, release/DLL pins, source/output hashes, prevalidation state, save/reopen identity and negative files are recorded in [VERIFICATION.md](VERIFICATION.md). This remains an API/serializer feasibility proof, not GUI or browser acceptance.
+
+## Verified offline-browser outcome
+
+After the independent native/API gate, the separate browser implementation passed the same contract using its actual downloaded files in [run 37552523731](https://github.com/Masanori-Spec/voice-slate/actions/runs/37552523731) at `3fef55877b3c506f85b9915072257ffb2dcd5c80`. Python output remained only an independent reference. The pinned eight-file ZIP was extracted and opened through `file://` in sandboxed Chromium; 24 UI scenarios, 20 JavaScript tests and 18 Python tests passed.
+
+The real browser USTX passed raw whole-document, production prevalidation and normal native save/reopen checks. Both actual corrupted-file controls failed the retained-state oracle. An independent native float32 midpoint probe produced different bit patterns for the exact and rounded decimal spellings; both producers rejected the unsupported exact spelling before output. JA/EN desktop/mobile screens and all twelve rendered print pages were inspected, including the repaired one-line print statistics and visible mobile final-column header. [Detailed evidence and limits](UI-VERIFICATION.md)

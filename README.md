@@ -1,16 +1,16 @@
 # VoiceSlate: selective USTX sharing preparation
 
-**Offline Japanese/English browser candidate for official OpenUtau `0.1.572.3-alpha`, USTX `0.10`, voice parts only.** The separate Python native/API proof passed. Actual packaged-browser/native and visual acceptance is still pending. No native GUI or audio verification is claimed.
+**Offline Japanese/English sharing-preparation app for official OpenUtau `0.1.572.3-alpha`, USTX `0.10`, voice parts only.** Actual packaged-browser downloads passed the pinned production deserializer, native save/reopen, independent retained-state checks and JA/EN visual review. No native GUI or audio verification is claimed.
 
-[Successful native run](https://github.com/Masanori-Spec/voice-slate/actions/runs/37546077577) · [Exact evidence and limits](docs/VERIFICATION.md)
+[Successful browser/native run](https://github.com/Masanori-Spec/voice-slate/actions/runs/37552523731) · [Exact browser evidence and limits](docs/UI-VERIFICATION.md) · [Earlier Python/native proof](docs/VERIFICATION.md)
 
-VoiceSlate prepares a separate USTX copy by clearing explicitly selected project-wide settings: singer IDs, renderer/resampler/wavtool bindings, track colors, chosen phoneme-override fields, chosen per-note expression values and chosen curves. It keeps original part boundaries, note positions/durations, lyrics, pitch points, vibrato, expression definitions and every unselected data value. YAML formatting/comments are not preserved when changes are made.
+VoiceSlate prepares a separate USTX copy by clearing explicitly selected project-wide settings: singer IDs, renderer/resampler/wavtool bindings, track colors, chosen phoneme-override fields, chosen per-note expression values and chosen curves. It keeps original part boundaries, note positions/durations, lyrics, note pitch points, vibrato, expression definitions and every unselected data value. YAML formatting/comments are not preserved when changes are made.
 
-This is a modest sharing-preparation utility. OpenUtau already has **Reset All**, which can reset a part's pitch, vibrato, phoneme timings/aliases, expressions and curves. Format converters also support USTX. This candidate focuses on reviewing selected settings across the existing project while keeping its other musical data, rather than rebuilding tracks/parts. See [demand and existing tools](docs/SOURCES.md).
+This is a modest sharing-preparation utility. OpenUtau already has **Reset All**, which can reset a part's pitch, vibrato, phoneme timings/aliases, expressions and curves. Format converters also support USTX. VoiceSlate focuses on reviewing selected settings across the existing project while keeping its other musical data, rather than rebuilding tracks/parts. See [demand and existing tools](docs/SOURCES.md).
 
 It is **not an anonymizer, privacy guarantee or voicebank-compatibility fixer**. Names, lyrics, comments and unselected settings remain in the copy. The review contains affected original values and may itself include information the user does not want to share. No singing synthesis or audio-equivalence claim is made.
 
-## Offline browser candidate
+## Open the offline app
 
 Extract [voice-slate-offline.zip](voice-slate-offline.zip) and open `index.html` in desktop Chrome/Chromium. Choose one saved `.ustx` file. Nothing is selected automatically. Choose settings, inspect affected original values and counts, then acknowledge the review before exporting a separate USTX copy. Input and policy changes invalidate acknowledgment; Clear and newer input cancel late reads, and policy changes cancel pending exports.
 
@@ -36,9 +36,9 @@ The policy's independent boolean choices are `singer`, `render`, and `trackColor
 
 Hosted CI downloads the exact official Linux release and verifies its size/SHA-256 before using its unchanged production assemblies. A small .NET 10 harness creates a synthetic two-track, three-part, six-note project through the official classes and `Ustx.Save`. It does not build or patch OpenUtau, invent a replacement consumer, or claim GUI testing.
 
-The independent prototype processes that actual native file. The gate checks **raw output and the production YAML deserializer before any native validation**, then separately runs normal `Ustx.Load`, `Ustx.Save`, and fresh reopen. This ordering matters: OpenUtau clears renderer bindings for missing singers during validation, which could otherwise hide a cleaner bug. A literal oracle checks all retained musical data, complete raw-document equality outside the 37 selected fixture changes, definition preservation, unchanged original bytes and actual corrupted-file controls. [Full contract](docs/TEST-DESIGN.md)
+The independent Python prototype supplies a reference result. The packaged browser processes the actual native file through its file input and explicit controls; its real downloaded USTX and review are the files consumed by the gate. The gate checks **raw output and the production YAML deserializer before any native validation**, then separately runs normal `Ustx.Load`, `Ustx.Save`, and fresh reopen. This ordering matters: OpenUtau clears renderer bindings for missing singers during validation, which could otherwise hide a cleaner bug. A literal oracle checks all retained musical data, complete raw-document equality outside the 37 selected fixture changes, definition preservation, unchanged original bytes and actual corrupted-file controls. [Full contract](docs/TEST-DESIGN.md)
 
-The native gate passed at `d3f8d4f39aeac95c4a1ccf860bbf10bfb84699cd`. Its actual cleaned file, prevalidation snapshots, byte-identical native saves and corruption controls are recorded in [VERIFICATION.md](docs/VERIFICATION.md). A future browser producer must pass again using its own real downloaded USTX; this prototype result does not pre-approve a different implementation.
+The browser/native gate passed at `3fef55877b3c506f85b9915072257ffb2dcd5c80`. Its actual downloads, prevalidation snapshots, byte-identical native saves, corruption controls and visual evidence are recorded in [UI-VERIFICATION.md](docs/UI-VERIFICATION.md). The earlier independent Python/native proof remains in [VERIFICATION.md](docs/VERIFICATION.md). Changes to either producer must satisfy the same gate again.
 
 ## Input scope and distribution
 
@@ -46,4 +46,4 @@ The readers accept a bounded UTF-8, single-document USTX 0.10 voice-part subset.
 
 Only source, the pinned js-yaml source/notice and synthetic test code are distributed. No OpenUtau/.NET binaries, voicebanks, real projects, original-code license grant, hosting setup or paid service is included. Official binaries are downloaded only into ignored hosted-CI scratch space; the retained evidence excludes them.
 
-The browser implementation is independent of the Python cleaner. Twenty local JavaScript tests include exact semantic equality to the accepted native fixture and all 37 Python review records; 18 Python tests still pass. The browser producer must pass the fresh hosted gate using its actual download, production deserialization before validation, native save/reopen and both real corrupted-file controls. Runtime, screenshots and print evidence for this browser candidate remain pending.
+The browser implementation is independent of the Python cleaner. The accepted hosted run passed 20 JavaScript tests, 18 Python tests and 24 actual browser scenarios. It also proved the float32 decimal-boundary risk in the official deserializer and rejected that unsupported input before browser output. JA/EN desktop, 390px layouts and all twelve rendered print pages were inspected. This is bounded fixture evidence for the pinned alpha, not a claim about every USTX project or browser.
